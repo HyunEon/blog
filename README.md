@@ -1,6 +1,6 @@
 # 개인 블로그
 
-Nuxt 4, TypeScript, Tailwind CSS 4, shadcn-vue, Cloudflare Workers와 D1으로 구성한 개인 블로그입니다. 글과 카테고리는 웹에서 생성·조회·수정·삭제합니다. 본문은 일반 텍스트이며 줄바꿈을 유지하고 HTML을 실행하지 않습니다.
+Nuxt 4, TypeScript, Tailwind CSS 4, shadcn-vue, Cloudflare Workers와 D1으로 구성한 개인 블로그입니다. 글과 카테고리는 웹에서 생성·조회·수정·삭제합니다. 본문은 Milkdown Crepe 편집기로 작성하며 작성/미리보기 탭을 제공합니다. 제목, 강조, 목록, 링크, 이미지 URL, 코드 블록, 표를 지원하고 직접 입력한 HTML은 실행하지 않습니다.
 
 ## 로컬 실행 (VS Code / WSL)
 
@@ -47,7 +47,7 @@ Playwright는 별도 로컬 D1 `.wrangler/test`를 사용합니다. 개발 서�
 
 ## Cloudflare 설정과 배포
 
-현재 공개 사이트는 **https://blog.hyuneon.org** 에 배포되어 있으며 원격 D1 생성·마이그레이션도 완료했습니다. 현재 계정에서 DB를 다시 만들 필요는 없습니다. **Access 애플리케이션 생성 권한이 없어 관리자 로그인 연결은 미완료**입니다. 관리자 접근은 서버에서 401로 차단됩니다. 아래 4–5번 설정 후 `pnpm deploy`로 반영하세요. 구체적인 현재 상태는 `RESULTS.md`에 기록했습니다.
+현재 공개 사이트는 **https://blog.hyuneon.org** 에 배포되어 있으며 원격 D1 생성·마이그레이션도 완료했습니다. 현재 계정에서 DB를 다시 만들 필요는 없습니다. Team domain과 AUD는 Worker에 반영했습니다. Access 앱에는 아래 4번의 관리자 페이지와 API 경로를 함께 등록해야 합니다. 로그인 후 원격 CRUD는 본인 계정으로 확인해야 합니다. 구체적인 현재 상태는 `RESULTS.md`에 기록했습니다.
 
 아래 전체 절차는 새 계정에 처음 배포하는 경우의 안내입니다.
 
@@ -70,6 +70,10 @@ Playwright는 별도 로컬 D1 `.wrangler/test`를 사용합니다. 개발 서�
 - 카테고리를 삭제하면 글은 삭제되지 않고 미분류로 남습니다. 글 삭제는 영구 삭제입니다.
 - UI는 공식 shadcn-vue CLI로 추가한 기본 컴포넌트를 조합합니다. 좌우 영역은 비워두고 중앙에 제목, 카테고리, 본문, 푸터를 배치합니다.
 - 글 제목, 사이트 소개는 `app/app.vue`, 기본 메타 정보는 `nuxt.config.ts`에서 변경합니다.
-- 리치 텍스트/Markdown, 이미지 업로드, 댓글, 검색은 현재 범위에 포함하지 않습니다.
+- 본문은 Milkdown Crepe의 기본 Frame 테마로 편집합니다. `/` 메뉴와 텍스트 선택 도구로 서식을 적용합니다. 나머지 폼과 탭은 shadcn-vue입니다.
+- 이미지 파일 업로드, AI, 수식 기능은 사용하지 않습니다. 붙여넣기/드롭으로 임시 blob URL이 저장되지 않도록 파일 업로드 처리를 비활성화했습니다. 기존 Markdown 이미지 URL은 유지할 수 있습니다.
+- 편집기는 관리자 화면에서 클라이언트 전용으로 로드합니다. 초기화 전 저장은 잠그고, 저장 중에는 읽기 전용으로 전환합니다. 작성/미리보기 전환 시 편집기 인스턴스를 유지합니다.
+- 본문은 기존 `content` 필드에 Markdown으로 저장합니다. Milkdown 직렬화 과정에서 목록 기호·공백 등 Markdown 표기가 정규화될 수 있습니다. 미리보기와 공개 글은 동일한 markdown-it 렌더러를 사용합니다. 기존 일반 텍스트도 Markdown으로 해석되며 줄바꿈은 유지합니다.
+- 요약은 선택 입력(최대 500자)입니다. 글 목록 소개문, 상세 페이지 도입문, 검색엔진 description에 사용합니다. 목록 API에서 긴 본문을 가져오지 않고 글을 소개하기 위해 분리했습니다. 비워도 저장되며 자동 생성하지 않습니다.
 
 참고: [Cloudflare Nuxt 배포](https://developers.cloudflare.com/workers/framework-guides/web-apps/more-web-frameworks/nuxt/), [Access JWT 검증](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/), [shadcn-vue Nuxt 설치](https://next.shadcn-vue.com/docs/installation/nuxt).

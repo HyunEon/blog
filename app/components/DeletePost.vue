@@ -1,10 +1,12 @@
 <script setup lang="ts">
 defineProps<{ title: string; disabled?: boolean }>()
+const ready = ref(false)
+onMounted(() => { ready.value = true })
 const emit = defineEmits<{ confirm: [] }>()
 </script>
 <template>
   <AlertDialog>
-    <AlertDialogTrigger as-child><Button variant="outline" size="sm" :disabled="disabled">삭제</Button></AlertDialogTrigger>
+    <AlertDialogTrigger as-child><Button variant="outline" size="sm" :disabled="disabled || !ready">삭제</Button></AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>
         <AlertDialogTitle>글을 삭제할까요?</AlertDialogTitle>

@@ -14,14 +14,17 @@
     "db:migrate": "wrangler d1 migrations apply DB --local",
     "preview": "wrangler dev",
     "deploy": "pnpm build && wrangler deploy",
-    "test:worker": "pnpm build && node scripts/verify-worker.mjs"
+    "test:worker": "pnpm db:migrate && pnpm build && node scripts/verify-worker.mjs"
   },
   "dependencies": {
     "@lucide/vue": "^1.45.0",
+    "@milkdown/crepe": "^7.22.1",
+    "@milkdown/kit": "^7.22.1",
     "@vueuse/core": "^13.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jose": "^6.0.0",
+    "markdown-it": "^15.0.2",
     "nuxt": "^4.0.0",
     "reka-ui": "^2.10.4",
     "tailwind-merge": "^3.0.0",
@@ -33,7 +36,9 @@
     "@cloudflare/workers-types": "^5.20260911.1",
     "@nuxt/eslint": "^1.0.0",
     "@playwright/test": "^1.55.0",
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.1.0",
+    "@types/markdown-it": "^14.2.0",
     "eslint": "^10.10.0",
     "shadcn-nuxt": "^2.0.0",
     "tailwindcss": "^4.1.0",
