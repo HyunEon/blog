@@ -8,5 +8,5 @@ export default defineNuxtConfig({
   vite: { plugins: [tailwindcss()] },
   shadcn: { prefix: '', componentDir: './app/components/ui' },
   nitro: { preset: 'cloudflare-module', cloudflare: { deployConfig: false, nodeCompat: true } },
-  app: { head: { htmlAttrs: { lang: 'ko' }, title: '기록', meta: [{ name: 'description', content: '개발하며 배운 것들을 기록합니다.' }] } },
+  app: { head: { htmlAttrs: { lang: 'ko' }, title: '기록하다.', meta: [{ name: 'description', content: '기록장' }], link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }], } },
 })

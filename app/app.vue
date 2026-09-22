@@ -9,7 +9,7 @@ const route = useRoute()
     <div class="flex min-w-0 flex-col">
       <header class="pt-16 pb-8 sm:pt-24">
         <Button as-child variant="link" class="h-auto p-0 text-3xl font-semibold tracking-tight"><NuxtLink to="/">기록하다.</NuxtLink></Button>
-        <p class="mt-3 text-sm text-muted-foreground">Lazy but Long</p>
+        <p class="mt-3 text-sm text-muted-foreground">기록장</p>
       </header>
       <nav aria-label="카테고리" class="flex flex-wrap gap-1 pb-5">
         <Button as-child :variant="route.path === '/' ? 'secondary' : 'ghost'" size="sm"><NuxtLink to="/">전체</NuxtLink></Button>

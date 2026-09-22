@@ -14,7 +14,7 @@ async function remove(id: string) {
 </script>
 <template>
   <section>
-    <div class="mb-8 flex items-center justify-between"><h1 class="text-2xl font-semibold">글 관리</h1><Button as-child><NuxtLink to="/admin/posts/new">새 글</NuxtLink></Button></div>
+    <div class="mb-8 flex items-center justify-between"><h1 class="text-2xl font-semibold">관리</h1><Button as-child><NuxtLink to="/admin/posts/new">새 글</NuxtLink></Button></div>
     <p v-if="error" role="alert">글을 불러오지 못했습니다. 인증 상태를 확인해 주세요.</p>
     <p v-if="message" role="alert">{{ message }}</p>
     <p v-if="data && !data.posts.length" class="py-8 text-muted-foreground">작성한 글이 없습니다.</p>
